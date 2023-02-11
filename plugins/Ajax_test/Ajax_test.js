@@ -3,7 +3,7 @@ const circle = document.getElementById('circle');
 const timer = document.getElementById('timer');
 const select = document.getElementById('form-field-subject');
 const subject = document.getElementById('subject');
-const $user_id = 0;
+const $user_id = 105;
 
 let time = 0;
 let interval;
@@ -16,19 +16,26 @@ button.addEventListener('click', () => {
   if (interval) 
   {
     
-    jQuery(document).ready(function($) {
-        $.ajax({
+    jQuery(document).ready(function($)
+    {
+        $.ajax(
+        { 
+		  type: "POST",
           url: '/wp-admin/admin-ajax.php',
-          data: {
-            action: 'my_ajax_function',
-            param: 'hello_world'
-          },
-          success: function(response) {
-            alert("stoptime + 10 : " + response);
-
-          }
+		  datatype: "json",
+          data:
+            {
+              action: 'my_ajax_function',
+              param_js: "1"
+            },
+			
+          success: function(data) 
+            {
+              alert(data);
+              // alert("stoptime + 10 : " + data);
+            }
         });
-      });
+    });
 
     clearInterval(interval);
     interval = null;
@@ -51,5 +58,4 @@ button.addEventListener('click', () => {
 
 
   }
-  
 });
