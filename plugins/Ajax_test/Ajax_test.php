@@ -9,7 +9,6 @@ Author URI: http://www.desterradum.nl
 License: GPL2
 */
 
-
 function my_page_alert() {
   $user_id = get_current_user_id();
   if ( is_page( 'timer-pupil' ) ) 
@@ -20,10 +19,20 @@ function my_page_alert() {
   }
 }
 
-function my_ajax_function() 
+// $param = $_POST['param_js'];
+
+function my_ajax_function($param) 
 {  
-  $test_message = " guess I'll return a value";
-  return $test_message;
+
+  if ( isset($_POST) ) 
+  {
+    if ( isset($_POST['param_js']) )
+    {
+        $param = $_POST['param_js'];
+        // error_log( "AJAX JS VAR = " . print_r( $param, true ) );
+        echo $param;
+    }
+  }
   wp_die();
 }
 

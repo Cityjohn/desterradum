@@ -16,6 +16,7 @@ function passuserid() {
   // Print the user ID as a JavaScript variable
   echo '<script>var current_user_id = ' . $user_id . ';</script>';
 }
+
 add_action( 'wp_head', 'passuserid' );
 
 // Close the PHP tag

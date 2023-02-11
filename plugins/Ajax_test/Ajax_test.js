@@ -9,11 +9,27 @@ let time = 0;
 let interval;
 let startTime;
 let stopTime;
+let test_var = 7;
 
 button.addEventListener('click', () => {
   if(subject.value === "Select"){return;}
   if (interval) 
   {
+    
+    jQuery(document).ready(function($) {
+        $.ajax({
+          url: '/wp-admin/admin-ajax.php',
+          data: {
+            action: 'my_ajax_function',
+            param: 'hello_world'
+          },
+          success: function(response) {
+            alert("stoptime + 10 : " + response);
+
+          }
+        });
+      });
+
     clearInterval(interval);
     interval = null;
     time = 0;
@@ -23,37 +39,6 @@ button.addEventListener('click', () => {
   } 
   else 
   {
-    // call ajax function
-    
-
-    jQuery(document).ready(function($) {
-        $.ajax({
-          url: '/wp-admin/admin-ajax.php',
-          data: {
-            action: 'my_ajax_function',
-            param: 'my_param'
-          },
-          success: function(response) {
-            console.log("\n\n\n\n\n\nsuccess\n\n\n\n\n\n");
-            console.log(response);
-          }
-        });
-      });
-    // jQuery.ajax({
-    //     type: "POST",
-    //     url: "/wp-admin/admin-ajax.php",
-    //     data: {
-    //         action: "my_ajax_function",
-    //         user_id: $user_id,
-    //         subject: subject,
-    //         startTime: startTime,
-    //         stopTime: stopTime
-    //     },
-    //     success: function(data) {
-    //         console.log("\n\n\n\n\n\nsuccess\n\n\n\n\n\n");
-    //     }
-    // });
-
     startTime = new Date();
     timer.textContent = '00:00';
     interval = setInterval(() => 
@@ -63,6 +48,8 @@ button.addEventListener('click', () => {
       const seconds = time % 60;
       timer.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }, 1000);
+
+
   }
   
 });
