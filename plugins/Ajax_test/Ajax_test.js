@@ -7,8 +7,8 @@ const $user_id = 105;
 
 let time = 0;
 let interval;
-let startTime;
-let stopTime;
+let starttime;
+let stoptime;
 let test_var = 7;
 
 button.addEventListener('click', () => {
@@ -26,7 +26,7 @@ button.addEventListener('click', () => {
           data:
             {
               action: 'my_ajax_function',
-              param_js: "1"
+              param_js: stoptime //"1"
             },
 			
           success: function(data) 
@@ -41,12 +41,12 @@ button.addEventListener('click', () => {
     interval = null;
     time = 0;
     timer.textContent = 'start';
-    stopTime = new Date();
-    console.log($user_id, subject, startTime, stopTime);
+    stoptime = new Date();
+    console.log($user_id, subject, starttime, stoptime);
   } 
   else 
   {
-    startTime = new Date();
+    starttime = new Date();
     timer.textContent = '00:00';
     interval = setInterval(() => 
     {
@@ -55,7 +55,6 @@ button.addEventListener('click', () => {
       const seconds = time % 60;
       timer.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }, 1000);
-
 
   }
 });
