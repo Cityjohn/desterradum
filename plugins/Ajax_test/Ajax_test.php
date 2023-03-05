@@ -26,41 +26,76 @@ function connect_to_wp_db()
 
   $wpdb->set_prefix('wp_edusid');
 
-  echo '<script>console.log("wp db type: ' . gettype($wpdb) . '")</script>';
-  echo '<script>console.log("wp db: ' . $wpdb->dbname . '")</script>';
-
   $user_email = $wpdb->get_var("SELECT user_email FROM $wpdb->prefix.edu_users WHERE id = 2");
   
   echo '<script>console.log("email var type: ' . gettype($user_email) . '")</script>';
   echo '<script>console.log("email var type: ' . $user_email . '")</script>';
 
-
-
   return 0;
 }
 
 
-function connectToDatabase($servername, $username, $password, $dbname) 
+
+function change_db_values_rambam($start_datetime, $end_datetime, $subject)
 {
-  $conn = new mysqli($servername, $username, $password, $dbname); // create a connection
-  
-  if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-  }
-  else {
-    echo "Connected successfully";
-  }
-  return $conn;
+  global $wpdb;
+
+  $currentuser = get_current_user_id();
+  $user_email = $wpdb->query(
+    $wpdb->prepare(
+        "
+            SELECT pupil FROM $wpdb->prefix.st_pupil_timeblocks WHERE ID = 1;
+        "
+    )
+  );
+  echo '<script>console.log("last query: ' . $wpdb->last_query . '")</script>'; 
 }
 
-//$conn = connectToDatabase($servername, $username, $password, $dbname); // Connect to the database
-//$conn->close();
+function change_db_values_rambam2($start_datetime, $end_datetime, $subject)
+{
+  global $wpdb;
+  $wpdb->set_prefix('wp_edusid');
+
+  $currentuser = get_current_user_id();
+  $user_email = $wpdb->query(
+    $wpdb->prepare(
+        "
+            INSERT INTO $wpdb->prefix.st_pupil_timeblocks (pupil, subject, start_datetime, end_datetime)
+            VALUES (%s, %s, %s, %s);
+        ",
+        $currentuser, $subject, $start_datetime, $end_datetime
+    )
+  );
+  echo '<script>console.log("last query: ' . $wpdb->last_query . '")</script>'; 
+}
+
+function change_db_values()
+{
+  global $wpdb;
+  $wpdb->update(
+    $wpdb->prefix.'.edu_users',
+    array(
+      'user_email' => 'sebas@email.nl',
+    ),
+    array(
+      'ID' => 2,
+    )
+  );
+  // print last query
+  echo '<script>console.log("last query: ' . $wpdb->last_query . '")</script>';
+  // $wpdb->
+}
+
+
+
+
+
 
 // check if the page is the timer-pupil page
 function my_page_alert() {
   $user_id = get_current_user_id();
   $user_email = connect_to_wp_db();
-  
+  // change_db_values();
 
   if ( is_page( 'timer-pupil' ) ) 
   {
@@ -71,7 +106,7 @@ function my_page_alert() {
         var user_email = 0; <?php //echo $user_email; ?>;
         
 
-        alert("user id = " + user_id + "\nuser email = " + user_email);
+        // alert("user id = " + user_id + "\nuser email = " + user_email);
 
         if (user_id == 2) 
         {
@@ -91,11 +126,19 @@ function my_ajax_function($param)
 
   if ( isset($_POST) ) 
   {
-    if ( isset($_POST['param_js']) )
+    if ( isset($_POST['starttime']) )
     {
-        $param = $_POST['param_js'];
-        // error_log( "AJAX JS VAR = " . print_r( $param, true ) );        
-        echo $param;
+        // $param = $_POST['param_js'];
+        $start_datetime = $_POST['starttime'];
+        $end_datetime = $_POST['stoptime'];
+        $subject = $_POST['subject'];
+
+        change_db_values_rambam2($start_datetime, $end_datetime, $subject);
+
+        // error_log( "AJAX JS VAR = " . print_r( $param, true ) );   
+        
+        // echo '<script>console.log("vars = ' . $start_datetime . "  ". $end_datetime ."  ". $subject. '")</script>';
+        echo $start_datetime, $end_datetime, $subject;
     }
   }
   wp_die();

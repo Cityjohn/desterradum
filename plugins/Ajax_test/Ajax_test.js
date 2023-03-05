@@ -26,7 +26,9 @@ button.addEventListener('click', () => {
           data:
             {
               action: 'my_ajax_function',
-              param_js: stoptime //"1"
+              starttime: starttime,
+              stoptime: stoptime,
+              subject: subject.value              
             },
 			
           success: function(data) 
