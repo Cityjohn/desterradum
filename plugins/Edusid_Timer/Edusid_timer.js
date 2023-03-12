@@ -26,8 +26,8 @@ button.addEventListener('click', () => {
           data:
             {
               action: 'my_ajax_function',
-              starttime: starttime,
-              stoptime: stoptime,
+              starttime: starttime.toISOString().slice(0, 19).replace('T', ' '),
+              stoptime: stoptime.toISOString().slice(0, 19).replace('T', ' '),
               subject: subject.value              
             },
 			
