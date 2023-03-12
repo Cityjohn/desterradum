@@ -33,7 +33,8 @@ function connect_to_wp_db()
 }
 
 
-function change_db_values_rambam($start_datetime, $end_datetime, $subject)
+// function change_db_values_rambam($start_datetime, $end_datetime, $subject)
+function select_query()
 {
   global $wpdb;
 
@@ -48,7 +49,8 @@ function change_db_values_rambam($start_datetime, $end_datetime, $subject)
   echo '<script>console.log("last query: ' . $wpdb->last_query . '")</script>'; 
 }
 
-function change_db_values_rambam2($start_datetime, $end_datetime, $subject)
+// function change_db_values_rambam2($start_datetime, $end_datetime, $subject)
+function insert_query($start_datetime, $end_datetime, $subject)
 {
   global $wpdb;
   $wpdb->set_prefix('wp_edusid');
@@ -66,33 +68,13 @@ function change_db_values_rambam2($start_datetime, $end_datetime, $subject)
   echo '<script>console.log("last query: ' . $wpdb->last_query . '")</script>'; 
 }
 
-function change_db_values()
-{
-  global $wpdb;
-  $wpdb->update(
-    $wpdb->prefix.'.edu_users',
-    array(
-      'user_email' => 'sebas@email.nl',
-    ),
-    array(
-      'ID' => 2,
-    )
-  );
-  // print last query
-  echo '<script>console.log("last query: ' . $wpdb->last_query . '")</script>';
-
-}
-
-
-
-
-
 
 // check if the page is the timer-pupil page
-function my_page_alert() {
+function my_page_alert() 
+{
   $user_id = get_current_user_id();
   $user_email = connect_to_wp_db();
-  // change_db_values();
+  
 
   if ( is_page( 'timer-pupil' ) ) 
   {
@@ -127,9 +109,8 @@ function my_ajax_function($param)
         $end_datetime = $_POST['stoptime'];
         $subject = $_POST['subject'];
 
-        change_db_values_rambam2($start_datetime, $end_datetime, $subject);
-
-        // error_log( "AJAX JS VAR = " . print_r( $param, true ) );   
+        insert_query($start_datetime, $end_datetime, $subject);
+        select_query();
         
         echo $start_datetime, $end_datetime, $subject;
     }
