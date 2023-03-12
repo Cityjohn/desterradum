@@ -34,7 +34,7 @@ function select_query()
   $user_email = $wpdb->query(
     $wpdb->prepare(
         "
-            SELECT pupil FROM $wpdb->prefix.st_pupil_timeblocks WHERE ID = 1;
+            SELECT pupil FROM $wpdb->prefix.st_pupil_timeblocks WHERE ID = $currentuser;
         "
     )
   );
@@ -43,7 +43,7 @@ function select_query()
 }
 
 
-function select_query_subjects()//$user_id)
+function select_query_subjects()
 {
   global $wpdb;
   $wpdb->set_prefix('wp_edusid');
@@ -58,26 +58,18 @@ function select_query_subjects()//$user_id)
         st_pupil_subjects.subject_name as subject_name
         FROM st_pupil_subjects_meta
         JOIN st_pupil_subjects ON st_pupil_subjects.subject_code = st_pupil_subjects_meta.subject_code
-        WHERE st_pupil_subjects_meta.pupil = 1
+        WHERE st_pupil_subjects_meta.pupil = $currentuser;
         "
     )
   );
-
   $results = $wpdb->get_results( $wpdb->last_query, ARRAY_A ); 
-  foreach ($results as $row) 
-  {
-    echo '<script>console.log("subject: ' . $row['subject_name'] . '")</script>';
-  }
+
   return $results;
 }
 
 
 function change_subjects($subjects)
 {
-  // foreach ($subjects as $row) 
-  // {
-  //   echo '<script>console.log("subject in change subs: ' . $row['subject_name'] . '")</script>';
-  // }
   foreach ($subjects as $sub) 
   {
     ?>
@@ -94,31 +86,14 @@ function change_subjects($subjects)
   }
 }
 
-
-function change_subjects2($subjects)
-{
-   ?>
-   <script>  
-    var subjects = <?php echo json_encode($subjects); ?>;
-    var select_copy = document.getElementById("subject");
-         
-     for (var i = 0; i < subjects.length; i++) 
-     {
-       var option = document.createElement("option");
-       option.text = subjects[i];
-       option.value = subjects[i];
-       select_copy.add(option);
-     }
-   
-   </script><?php  
-}
-
 function insert_query($start_datetime, $end_datetime, $subject)
 {
    global $wpdb;
    $wpdb->set_prefix('wp_edusid');
 
    $currentuser = get_current_user_id();
+   //print to console the subject
+    echo '<script>console.log("subject in insert query: ' . $subject . '")</script>';
    $user_email = $wpdb->query(
      $wpdb->prepare(
          "
@@ -131,7 +106,6 @@ function insert_query($start_datetime, $end_datetime, $subject)
    echo '<script>console.log("last query: ' . $wpdb->last_query . '")</script>'; 
 }
 
-
 // check if the page is the timer-pupil page
 function my_page_alert() 
 {
@@ -143,8 +117,7 @@ function my_page_alert()
       <script src="<?php echo plugin_dir_url( __FILE__ ) . 'Edusid_timer.js'; ?>"></script>
    <?php
    $subs = select_query_subjects();
-
-   change_subjects($subs);//array("beeb", "boob", "art", "music", "sport", "other"));
+   change_subjects($subs);
     
   }
 }
