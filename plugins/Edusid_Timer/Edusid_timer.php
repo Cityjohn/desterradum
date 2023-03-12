@@ -38,45 +38,78 @@ function select_query()
         "
     )
   );
+
   echo '<script>console.log("last query: ' . $wpdb->last_query . '")</script>'; 
 }
 
 
-function select_query_subjects($user_id)
+function select_query_subjects()//$user_id)
 {
   global $wpdb;
+  $wpdb->set_prefix('wp_edusid');
 
   $currentuser = get_current_user_id();
   $user_email = $wpdb->query(
     $wpdb->prepare(
         "
-            SELECT subject FROM $wpdb->prefix.st_pupil_timeblocks WHERE ID = $user_id;
+        SELECT
+        pupil,
+        st_pupil_subjects.subject_code as subject_code,
+        st_pupil_subjects.subject_name as subject_name
+        FROM st_pupil_subjects_meta
+        JOIN st_pupil_subjects ON st_pupil_subjects.subject_code = st_pupil_subjects_meta.subject_code
+        WHERE st_pupil_subjects_meta.pupil = 1
         "
     )
   );
-  echo '<script>console.log("last query: ' . $wpdb->last_query . '")</script>'; 
+
+  $results = $wpdb->get_results( $wpdb->last_query, ARRAY_A ); 
+  foreach ($results as $row) 
+  {
+    echo '<script>console.log("subject: ' . $row['subject_name'] . '")</script>';
+  }
+  return $results;
 }
+
 
 function change_subjects($subjects)
 {
-   $subjects = array("math", "english", "history", "science", "geography", "art", "music", "sport", "other");
-   ?>
-   <script>
-   var user_id = <?php //echo $user_id; ?>;
-   var user_email = 0; <?php //echo $user_email; ?>;
+  // foreach ($subjects as $row) 
+  // {
+  //   echo '<script>console.log("subject in change subs: ' . $row['subject_name'] . '")</script>';
+  // }
+  foreach ($subjects as $sub) 
+  {
+    ?>
+   <script>  
+    var subject_option = <?php echo json_encode($sub['subject_name']); ?>;
+    var select_copy = document.getElementById("subject");
+    var option = document.createElement("option");
+    console.log("subject in change subject: " + subject_option);
+    option.text = subject_option;
+    option.value = subject_option;
+    select_copy.add(option);
   
-   if (user_id == 2) 
-   {
-     var select_copy = document.getElementById("subject");
-     var option = document.createElement("option");
-     //for loop with the lengt of the array subjects
+   </script><?php  
+  }
+}
+
+
+function change_subjects2($subjects)
+{
+   ?>
+   <script>  
+    var subjects = <?php echo json_encode($subjects); ?>;
+    var select_copy = document.getElementById("subject");
+         
      for (var i = 0; i < subjects.length; i++) 
      {
+       var option = document.createElement("option");
        option.text = subjects[i];
        option.value = subjects[i];
        select_copy.add(option);
      }
-   }
+   
    </script><?php  
 }
 
@@ -103,29 +136,16 @@ function insert_query($start_datetime, $end_datetime, $subject)
 function my_page_alert() 
 {
   $user_id = get_current_user_id();
-  // $user_email = connect_to_wp_db();
-
-  // select_query_subjects(2);
-  
 
   if ( is_page( 'timer-pupil' ) ) 
   {
     ?>
       <script src="<?php echo plugin_dir_url( __FILE__ ) . 'Edusid_timer.js'; ?>"></script>
-      <script>
-        var user_id = <?php echo $user_id; ?>;        
-        
-        if (user_id == 2) 
-        {
-          // function change_subjects($subjects);
-        var select_copy = document.getElementById("subject");
-        var option = document.createElement("option");
-        option.text = "math";
-        option.value = "math";
-        select_copy.add(option);
-        }
-      </script>
-    <?php
+   <?php
+   $subs = select_query_subjects();
+
+   change_subjects($subs);//array("beeb", "boob", "art", "music", "sport", "other"));
+    
   }
 }
 
