@@ -9,39 +9,14 @@ Author URI: http://www.desterradum.nl
 License: GPL2
 */
 
+require_once( plugin_dir_path( __FILE__ ) . 'Grade_counter.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'Query_calls.php' );
+
+
 $servername = "edusid.com";
 $username = "";
 $password = "";
 $dbname = "testdb_";
-
-function connect_to_wp_db()
-{
-  global $wpdb;
-
-  $wpdb->set_prefix('wp_edusid');
-  $user_email = $wpdb->get_var("SELECT user_email FROM $wpdb->prefix.edu_users WHERE id = 2");  
-  echo '<script>console.log("email var type: ' . gettype($user_email) . '")</script>';
-  echo '<script>console.log("email var type: ' . $user_email . '")</script>';
-
-  return 0;
-}
-
-function select_query()
-{
-  global $wpdb;
-
-  $currentuser = get_current_user_id();
-  $user_email = $wpdb->query(
-    $wpdb->prepare(
-        "
-            SELECT pupil FROM $wpdb->prefix.st_pupil_timeblocks WHERE ID = $currentuser;
-        "
-    )
-  );
-
-  echo '<script>console.log("last query: ' . $wpdb->last_query . '")</script>'; 
-}
-
 
 function select_query_subjects()
 {
@@ -49,7 +24,8 @@ function select_query_subjects()
   $wpdb->set_prefix('wp_edusid');
 
   $currentuser = get_current_user_id();
-  $user_email = $wpdb->query(
+  // $user_email = 
+  $wpdb->query(
     $wpdb->prepare(
         "
         SELECT
@@ -75,11 +51,12 @@ function change_subjects($subjects)
     ?>
    <script>  
     var subject_option = <?php echo json_encode($sub['subject_name']); ?>;
+    var subject_code = <?php echo json_encode($sub['subject_code']); ?>;
     var select_copy = document.getElementById("subject");
     var option = document.createElement("option");
     console.log("subject in change subject: " + subject_option);
     option.text = subject_option;
-    option.value = subject_option;
+    option.value = subject_code;
     select_copy.add(option);
   
    </script><?php  
@@ -94,7 +71,8 @@ function insert_query($start_datetime, $end_datetime, $subject)
    $currentuser = get_current_user_id();
    //print to console the subject
     echo '<script>console.log("subject in insert query: ' . $subject . '")</script>';
-   $user_email = $wpdb->query(
+  //  $user_email = 
+   $wpdb->query(
      $wpdb->prepare(
          "
              INSERT INTO $wpdb->prefix.st_pupil_timeblocks (pupil, subject, start_datetime, end_datetime)
