@@ -1,13 +1,4 @@
 <?php
-/*
-Plugin Name: Edusid Timer
-Plugin URI: http://www.edusid.nl
-Description: This is a custom plugin does an ajax call to the server and returns the user id
-Version: 1.0
-Author: Sebastian Smit
-Author URI: http://www.edusid.nl
-License: GPL2
-*/
 
 
 class grade_determination

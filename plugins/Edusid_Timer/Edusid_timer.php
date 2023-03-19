@@ -120,8 +120,8 @@ function my_ajax_function($param)
   wp_die();
 }
 
-add_action( 'wp_footer', 'my_page_alert' );
-add_action( 'wp_ajax_my_ajax_function', 'my_ajax_function' );
+// add_action( 'wp_footer', 'my_page_alert' );
+// add_action( 'wp_ajax_my_ajax_function', 'my_ajax_function' );
 // add_action( 'wp_ajax_nopriv_my_ajax_function', 'my_ajax_function' );
 
 ?>
