@@ -6,6 +6,18 @@
 
 class Edusid_timer
 {
+  function __construct()
+  {
+    add_action( 'wp_footer', array($this, 'my_page_alert') );
+    add_action( 'wp_ajax_my_ajax_function', array($this, 'my_ajax_function') );
+    // add_action( 'wp_enqueue_scripts', array($this, 'enqueue_scripts') );
+    // add_action( 'wp_ajax_nopriv_my_ajax_function', array($this, 'my_ajax_function') );
+  }
+
+  function enqueue_scripts() 
+  {
+    wp_enqueue_script( 'my-ajax-script', plugin_dir_url( __FILE__ ) . 'Edusid_timer.js', array('jquery') );    
+  }
 
   public function just_say_hello()
   {
@@ -107,9 +119,9 @@ class Edusid_timer
           $end_datetime = $_POST['stoptime'];
           $subject = $_POST['subject'];
 
-          insert_query($start_datetime, $end_datetime, $subject);             
+          $this->insert_query($start_datetime, $end_datetime, $subject);             
           
-          echo $start_datetime, $end_datetime, $subject;
+          echo $start_datetime . ' ' . $end_datetime . ' ' . $subject;
       }
     }
     wp_die();

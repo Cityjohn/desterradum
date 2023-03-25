@@ -1,22 +1,18 @@
 <?php
 
-
-
 class Calls_To_Query
 {
   public $wpdb;
   public $current_user;
   public $subject;
 
-  function set_wpdb($wpdb){$this->wpdb = $wpdb;}
-
-  function Init_db_connection()
-  {  
+  public function __construct()
+  {
     global $wpdb;
-    $wpdb->set_prefix('wp_edusid');
-    set_wpdb($wpdb);
+    $this->wpdb = $wpdb;
+    $this->wpdb->set_prefix('wp_edusid');
+    $this->current_user = get_current_user_id();    
   }
-
 
   //query the subjects related to the current user and return the subjects as an array
   function select_query_subjects($currentuser)

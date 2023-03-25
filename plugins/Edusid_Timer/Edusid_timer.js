@@ -9,7 +9,7 @@ let time = 0;
 let interval;
 let starttime;
 let stoptime;
-let test_var = 7;
+// let test_var = 7;
 
 button.addEventListener('click', () => {
   if(subject.value === "Select"){return;}
