@@ -3,13 +3,45 @@ const circle = document.getElementById('circle');
 const timer = document.getElementById('timer');
 const select = document.getElementById('form-field-subject');
 const subject = document.getElementById('subject');
+const topmessage = document.getElementById('topmessage');
+const bottommessage  = document.getElementById('bottommessage');
 const $user_id = 105;
 
 let time = 0;
 let interval;
 let starttime;
 let stoptime;
-// let test_var = 7;
+
+function start_state_timer()
+{
+  circle.style.r = '30%';  
+  topmessage.style.opacity = '0';
+  bottommessage.style.opacity = '0';
+  timer.textContent = 'start';
+}
+
+function stop_state_timer()
+{
+  circle.style.r = '50%';  
+  topmessage.style.text = 'start';
+  bottommessage.style.text = 'bottommessage';
+  topmessage.style.opacity = '1';
+  bottommessage.style.opacity = '1';
+  timer.textContent = '5.5';
+}
+
+function counting_state_timer()
+{
+  circle.style.r = '30%';
+  topmessage.style.opacity = '0';
+  bottommessage.style.opacity = '0';
+  timer.textContent = '00:00';
+}
+
+
+
+
+
 
 button.addEventListener('click', () => {
   if(subject.value === "Select"){return;}
@@ -33,8 +65,9 @@ button.addEventListener('click', () => {
 			
           success: function(data) 
             {
-              alert(data);
-              // alert("stoptime + 10 : " + data);
+              stop_state_timer()
+              button.addEventListener('click', () => {start_state_timer();});
+              // alert(data);
             }
         });
     });

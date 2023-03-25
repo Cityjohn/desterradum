@@ -36,6 +36,8 @@ class Calls_To_Query
     );
     $results = $this->wpdb->get_results( $this->wpdb->last_query, ARRAY_A ); 
 
+    //check if the dt/dc is readable
+
     return $results;
   }
 
