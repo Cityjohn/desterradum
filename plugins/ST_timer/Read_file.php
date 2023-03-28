@@ -6,7 +6,7 @@ Description: This is a custom plugin that passes the current user's ID to JavaSc
 Version: 1.0
 Author: Marco Olariu
 Author URI: http://www.desterradum.nl
-License: GPL2
+License: none
 */
 
 function readTextFile($fileName) {

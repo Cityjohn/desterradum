@@ -6,7 +6,7 @@ Description: This is a custom plugin does an ajax call to the server and returns
 Version: 1.0
 Author: Sebastian Smit
 Author URI: http://www.edusid.com
-License: GPL2
+License: none
 */
 
 
