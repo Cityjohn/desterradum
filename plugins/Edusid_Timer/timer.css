@@ -1,0 +1,55 @@
+
+
+/* change the cursor to a pointing finger */
+.pointer-cursor {
+    cursor: pointer;
+}
+
+
+/* Subject selector */
+#subject
+{
+    border-radius: 0px;
+}
+
+.center
+{
+    display: block;
+    text-align: center;
+}
+
+.selection select:hover {
+  cursor: pointer;
+}
+
+.selection
+{
+    min-width: 300px;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
+
+/* Horizontal navbar section */
+#navbar
+{
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.center
+{
+    display: block;
+    text-align: center;
+}
+.selection
+{
+    min-width: 250px;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
