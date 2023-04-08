@@ -1,8 +1,5 @@
 <?php
 
-// require_once( plugin_dir_path( __FILE__ ) . 'Grade_counter.php' );
-// require_once( plugin_dir_path( __FILE__ ) . 'Query_calls.php' );
-
 
 class Edusid_timer
 {
@@ -10,8 +7,7 @@ class Edusid_timer
   {
     add_action( 'wp_footer', array($this, 'my_page_alert') );
     add_action( 'wp_ajax_my_ajax_function', array($this, 'my_ajax_function') );
-    // add_action( 'wp_enqueue_scripts', array($this, 'enqueue_scripts') );
-    // add_action( 'wp_ajax_nopriv_my_ajax_function', array($this, 'my_ajax_function') );
+
   }
 
   function enqueue_scripts() 
@@ -94,7 +90,14 @@ class Edusid_timer
     $user_id = get_current_user_id();
 
     echo '<script>console.log("userid: ' . $user_id . '")</script>';
-    if ( is_page( 'timer-pupil' ) ) 
+
+    if ( is_page( 'contact' ) )
+    {
+      echo '<script>console.log("this is a message")</script>';
+    } 
+    
+
+    if ( is_page( 'pupil-timer' ) ) 
     {
       ?>
         <script src="<?php echo plugin_dir_url( __FILE__ ) . 'Edusid_timer.js'; ?>"></script>
@@ -106,6 +109,7 @@ class Edusid_timer
     $this->change_subjects($subs);
       
     }
+
   }
 
   public function my_ajax_function($param) 

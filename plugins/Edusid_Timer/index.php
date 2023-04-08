@@ -13,8 +13,10 @@ License: none
 require_once( plugin_dir_path( __FILE__ ) . 'Grade_counter.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'Query_calls.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'Edusid_timer.php' );	
+require_once( plugin_dir_path( __FILE__ ) . 'Page_selecter.php' );
 
 
 $timer = new Edusid_timer();
+// contact_page_alert();
 
 ?>
