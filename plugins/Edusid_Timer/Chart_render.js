@@ -5,6 +5,7 @@
 // queries maken o.b.v de geselecteerde klas
 // stippellijn toevoegen aan de chart vanaf een de 1 na laatse datum
 
+
 function renderChart(data) 
 {
     var options = {
@@ -36,7 +37,6 @@ function UpdateChart(data, chart)
     chart.updateSeries(data);
 }
 
-
 var options = {
     chart: {
         type: 'line',
@@ -57,7 +57,6 @@ var options = {
 
 var chart = new ApexCharts(document.getElementById('pupil-dashboard-chart'), options);
 chart.render();
-
 
 chart.updateSeries([{
     name: 'grade',
