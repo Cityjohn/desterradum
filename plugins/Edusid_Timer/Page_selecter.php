@@ -14,7 +14,14 @@ function Contact_Page_Alert()
     {
         echo '<script>console.log("dashboard pagina is bereikt")</script>';
         ?>
-           <script src="<?php echo plugin_dir_url( __FILE__ ) . 'Chart_render.js'; ?>"></script>
+           <script src="<?php echo plugin_dir_url( __FILE__ ) . 'Pupil_chart_render.js'; ?>"></script>
+        <?php
+    }
+    else if ( is_page( 'teacher-dashboard' ) ) 
+    {
+        echo '<script>console.log("dashboard pagina is bereikt")</script>';
+        ?>
+           <script src="<?php echo plugin_dir_url( __FILE__ ) . 'Teacher_chart_render.js'; ?>"></script>
         <?php
     }
     else if ( is_page( 'pupil-timer' ) ) 
