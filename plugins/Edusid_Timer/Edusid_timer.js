@@ -67,10 +67,6 @@ function growing_state_timer(state_new, state_timer)
 {
   if (new_state === state_new && timer_state === state_timer) 
   {
-  // if (new_state === 'growing' && timer_state === 'counting') {
-    
-    topmessage.style.text = 'hoera';
-    bottommessage.style.text = 'hoera maar op een andere regel';
     timer.textContent = '5.5';
     topmessage.style.opacity = '1';
     bottommessage.style.opacity = '1';
@@ -162,11 +158,9 @@ function shrinking_state_timer(state_new, state_timer)
 {
   if (new_state === state_new && timer_state === state_timer) 
   {    
-    topmessage.style.text = 'hoera';
-    bottommessage.style.text = 'hoera maar op een andere regel';
-    timer.textContent = '5.5';
-    topmessage.style.opacity = '1';
-    bottommessage.style.opacity = '1';
+    timer.textContent = 'start';
+    topmessage.style.opacity = '0';
+    bottommessage.style.opacity = '0';
 
     // disable click actions while the circle is growing
     button.disabled = true;
@@ -209,7 +203,7 @@ function no_subject_selected()
 {
   if (subject.value === "Select") 
   {
-     alert('Please select a subject biep boop biep');    
+     alert('Please select a subject');    
   }
 }
 
@@ -223,7 +217,6 @@ button.addEventListener('click', () => {
   else if(new_state === "shrinking"){new_state = 'start';}
 
   console.log("new state = " + new_state + " timer state = " + timer_state);
-
 
   start_state_timer(state_new = 'start', state_timer = 'shrinking');
   counting_state_timer(state_new = 'counting', state_timer = 'start');
