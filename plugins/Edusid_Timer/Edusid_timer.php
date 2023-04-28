@@ -1,13 +1,11 @@
 <?php
 
-
 class Edusid_timer
 {
   function __construct()
   {
     add_action( 'wp_footer', array($this, 'my_page_alert') );
     add_action( 'wp_ajax_my_ajax_function', array($this, 'my_ajax_function') );
-
   }
 
   function enqueue_scripts() 
@@ -15,11 +13,7 @@ class Edusid_timer
     wp_enqueue_script( 'my-ajax-script', plugin_dir_url( __FILE__ ) . 'Edusid_timer.js', array('jquery') );    
   }
 
-  public function just_say_hello()
-  {
-    ?><script>console.log("\n\n\n\n\n\n\n\nhello from edusid timer\n\n\n\n\n\n\n\n");</script><?php    
-  }
-
+  //TODO verplaatsen naar queries file
   public function select_query_subjects()
   {
     global $wpdb;
@@ -84,6 +78,30 @@ class Edusid_timer
     echo '<script>console.log("last query: ' . $wpdb->last_query . '")</script>'; 
   }
 
+  function retrieve_grade_data_pupil()
+  {
+    global $wpdb;
+    $wpdb->set_prefix('wp_edusid');
+
+    $wpdb->query(
+      $wpdb->prepare(
+          "
+          SELECT *
+          FROM table_name 
+          WHERE pupil = 1;
+          "
+      )
+    );
+    $results = $wpdb->get_results( $wpdb->last_query, ARRAY_A ); 
+    
+    echo '<script>console.log("results: ' . $results . '")</script>';
+
+
+    // return $results;  
+  }
+
+
+
   // check if the page is the timer-pupil page
   public function my_page_alert() 
   {
@@ -99,6 +117,7 @@ class Edusid_timer
 
     if ( is_page( 'pupil-timer' ) ) 
     {
+      
       ?>
         <script src="<?php echo plugin_dir_url( __FILE__ ) . 'Edusid_timer.js'; ?>"></script>
     <?php
@@ -111,6 +130,7 @@ class Edusid_timer
     }
 
   }
+
 
   public function my_ajax_function($param) 
   {  

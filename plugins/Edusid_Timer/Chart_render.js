@@ -1,9 +1,10 @@
-// too: queries maken die de data ophaalt en deze doorgeven aan de renderChart functie
+// todo: queries maken die de data ophaalt en deze doorgeven aan de renderChart functie
 // en de updateChart functie
 // selector aanpassen en queries o.b.v. selector
 // queries vanuit class callen
 // queries maken o.b.v de geselecteerde klas
 // stippellijn toevoegen aan de chart vanaf een de 1 na laatse datum
+// 
 
 function renderChart(data) 
 {

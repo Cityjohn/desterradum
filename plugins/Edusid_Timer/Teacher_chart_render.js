@@ -4,8 +4,9 @@
 // selector aanpassen en queries o.b.v. selector
 // queries vanuit class callen
 // queries maken o.b.v de geselecteerde klas
-
 // The teacher chart is constrained at 350px by the div, changing this affects offset values
+
+
 
 var options = {
 	
@@ -33,8 +34,6 @@ var options = {
         data: [5.5, 6.2, 5.7, 6.2, 6],
 		
     }],
-	
-	
     
     // Fill paramters such as Gradient for area charts
     

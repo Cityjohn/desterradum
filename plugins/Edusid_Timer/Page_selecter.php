@@ -27,6 +27,9 @@ function Contact_Page_Alert()
     else if ( is_page( 'pupil-timer' ) ) 
     {
         echo '<script>console.log("pupil-timer pagina is bereikt")</script>';
+        ?>
+            <script src="<?php echo plugin_dir_url( __FILE__ ) . 'Edusid_timer.js'; ?>"></script>
+        <?php           
     }
 }
 

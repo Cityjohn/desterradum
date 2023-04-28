@@ -45,7 +45,6 @@ function counting_state_timer(state_new, state_timer)
     interval = null;
     time = 0;    
     stoptime = new Date();
-
     
     interval =  setInterval(() => 
       {
@@ -132,8 +131,7 @@ function stop_state_timer()
 			
           success: function(data) 
             {
-              stop_state_timer()
-              // button.addEventListener('click', () => {start_state_timer();});   
+              stop_state_timer();   
 
             }
         });
@@ -146,8 +144,6 @@ function stop_state_timer()
     // console.log($user_id, subject, starttime, stoptime);
 
     shrinking_state_timer(state_new = 'shrinking', state_timer = 'stopped');
-
-    // timer_state = 'start';
   }  
 }
 
@@ -184,7 +180,6 @@ function shrinking_state_timer(state_new, state_timer)
         }, 2000);
       }
     }
-    
     requestAnimationFrame(animate);// start the animation 
 }
 
@@ -200,18 +195,11 @@ function no_subject_selected()
 // click function to switch between the states of the timer
 button.addEventListener('click', () => {
   if (subject.value == "Select"){ no_subject_selected(); return;}
-  // if(new_state === "start"){new_state = "counting";}
-  // else 
   if(new_state === "counting"){new_state = "growing";}
   else if(new_state === "growing"){new_state = "stopped";}
   else if(new_state === "stopped"){new_state = "counting";}  
 
-  console.log("new state = " + new_state + " timer state = " + timer_state);
-
-  // if(one_time_bool === true){one_time_bool = false; start_state_timer();}
-  // start_state_timer(state_new = 'start', state_timer = 'stopped');
   counting_state_timer(state_new = 'counting', state_timer = 'stopped');
   growing_state_timer(state_new = 'growing', state_timer = 'counting');
   stop_state_timer(state_new = 'stopped', state_timer = 'growing');
-
 });

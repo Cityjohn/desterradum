@@ -58,8 +58,21 @@ function insert_query($start_datetime, $end_datetime, $subject)
    echo '<script>console.log("last query: ' . $wpdb->last_query . '")</script>'; 
 }
 
+}
+
+
+
+//query the subjects related to the current user and return the subjects as an array
+function retrieve_grade_data_pupil($currentuser)
+{
+  //aanroepen als method ergens, onderstaande query erin fietsen
+  //SELECT *
+  //FROM table_name 
+  //WHERE pupil = 'pupil_value';
 
 }
+
+
 
 
 ?>
