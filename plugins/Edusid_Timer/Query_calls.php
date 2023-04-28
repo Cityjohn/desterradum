@@ -59,7 +59,6 @@ function insert_query($start_datetime, $end_datetime, $subject)
 }
 
 
-
 }
 
 

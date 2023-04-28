@@ -11,20 +11,20 @@ let time = 0;
 let interval;
 let starttime;
 let stoptime;
-let timer_state = 'start';
-let new_state = 'start';
+let timer_state = 'stopped';
+let new_state = 'stopped';
+let one_time_bool = true;
 
 // Start state for the UI of the timer circle
 function start_state_timer(state_new, state_timer)
 {
-  if (new_state === state_new && timer_state === state_timer)
-  
+  if (true)//new_state === state_new && timer_state === state_timer)  
   {
     circle.style.r = '30%';  
     topmessage.style.opacity = '0';
     bottommessage.style.opacity = '0';
     timer.textContent = 'start';
-    timer_state = new_state; //'start';
+    timer_state = new_state;
   }
 }
 
@@ -32,10 +32,9 @@ function start_state_timer(state_new, state_timer)
 //'start' and the new state is 'counting'
 function counting_state_timer(state_new, state_timer)
 {
-  // if (new_state === 'counting' && timer_state === 'start')
   if (new_state === state_new && timer_state === state_timer)
   {
-    timer_state = new_state; //'counting';
+    timer_state = new_state; 
     circle.style.r = '30%';
     topmessage.style.opacity = '0';
     bottommessage.style.opacity = '0';
@@ -69,13 +68,11 @@ function growing_state_timer(state_new, state_timer)
   {
     timer.textContent = '5.5';
     topmessage.style.opacity = '1';
-    bottommessage.style.opacity = '1';
-
-    // disable click actions while the circle is growing
-    button.disabled = true;
+    bottommessage.style.opacity = '1'; 
+    button.disabled = true;    // disable click actions while the circle is growing
 
     // define the animation properties
-    const duration = 2000; // animation duration in milliseconds
+    const duration = 1000; // animation duration in milliseconds
     const startRadius = 30; // initial radius in percent
     const endRadius = 50; // final radius in percent
     const startTime = performance.now(); // animation start time
@@ -95,14 +92,14 @@ function growing_state_timer(state_new, state_timer)
         // animation finished, enable click actions after a delay of 2 seconds
         setTimeout(() => {
           button.disabled = false;
-        }, 4000);
+        }, 2000);
       }
     }
 
     // start the animation
     requestAnimationFrame(animate);
 
-    timer_state = new_state;//'stopped';
+    timer_state = new_state;
   }
 }
 
@@ -112,15 +109,11 @@ function stop_state_timer()
 {
   if (new_state === state_new && timer_state === state_timer) 
   {
-  // if (new_state === 'stopped' && timer_state === 'counting')   
-    timer_state = new_state;//'stopped';
+    timer_state = new_state;
     circle.style.r = '50%';  
-    topmessage.style.text = 'hoera';
-    bottommessage.style.text = 'hoera maar op een andere regel';
     timer.textContent = '5.5';
     topmessage.style.opacity = '1';
-    bottommessage.style.opacity = '1';
-    
+    bottommessage.style.opacity = '1';    
 
     jQuery(document).ready(function($)
     {
@@ -140,7 +133,7 @@ function stop_state_timer()
           success: function(data) 
             {
               stop_state_timer()
-              button.addEventListener('click', () => {start_state_timer();});   
+              // button.addEventListener('click', () => {start_state_timer();});   
 
             }
         });
@@ -150,15 +143,17 @@ function stop_state_timer()
     interval = null;
     time = 0;    
     stoptime = new Date();
-    console.log($user_id, subject, starttime, stoptime);
-  }
+    // console.log($user_id, subject, starttime, stoptime);
+
+    shrinking_state_timer(state_new = 'shrinking', state_timer = 'stopped');
+
+    // timer_state = 'start';
+  }  
 }
 
 function shrinking_state_timer(state_new, state_timer)
-{
-  if (new_state === state_new && timer_state === state_timer) 
-  {    
-    timer.textContent = 'start';
+{ 
+    timer.textContent = 'start';  
     topmessage.style.opacity = '0';
     bottommessage.style.opacity = '0';
 
@@ -166,7 +161,7 @@ function shrinking_state_timer(state_new, state_timer)
     button.disabled = true;
 
     // define the animation properties
-    const duration = 2000; // animation duration in milliseconds
+    const duration = 1000; // animation duration in milliseconds
     const startRadius = 50; // initial radius in percent
     const endRadius = 30; // final radius in percent
     const startTime = performance.now(); // animation start time
@@ -186,17 +181,12 @@ function shrinking_state_timer(state_new, state_timer)
         // animation finished, enable click actions after a delay of 2 seconds
         setTimeout(() => {
           button.disabled = false;
-        }, 4000);
+        }, 2000);
       }
     }
-
-    // start the animation
-    requestAnimationFrame(animate);
-
-    timer_state = new_state;//'stopped';
-  }
+    
+    requestAnimationFrame(animate);// start the animation 
 }
-
 
 // function to make sure the user selects a subject before starting the timer
 function no_subject_selected()
@@ -210,18 +200,18 @@ function no_subject_selected()
 // click function to switch between the states of the timer
 button.addEventListener('click', () => {
   if (subject.value == "Select"){ no_subject_selected(); return;}
-  if(new_state === "start"){new_state = "counting";}
-  else if(new_state === "counting"){new_state = "growing";}
+  // if(new_state === "start"){new_state = "counting";}
+  // else 
+  if(new_state === "counting"){new_state = "growing";}
   else if(new_state === "growing"){new_state = "stopped";}
-  else if(new_state === "stopped"){new_state = "shrinking";}
-  else if(new_state === "shrinking"){new_state = 'start';}
+  else if(new_state === "stopped"){new_state = "counting";}  
 
   console.log("new state = " + new_state + " timer state = " + timer_state);
 
-  start_state_timer(state_new = 'start', state_timer = 'shrinking');
-  counting_state_timer(state_new = 'counting', state_timer = 'start');
+  // if(one_time_bool === true){one_time_bool = false; start_state_timer();}
+  // start_state_timer(state_new = 'start', state_timer = 'stopped');
+  counting_state_timer(state_new = 'counting', state_timer = 'stopped');
   growing_state_timer(state_new = 'growing', state_timer = 'counting');
   stop_state_timer(state_new = 'stopped', state_timer = 'growing');
-  shrinking_state_timer(state_new = 'shrinking', state_timer = 'stopped');
 
 });
